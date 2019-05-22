@@ -1,0 +1,28 @@
+#container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 384px;
+    height: 224px;
+    overflow: hidden;
+}
+
+.ghost {
+    position: absolute;
+    opacity: 0.5;
+}
+
+.ghostlabel {
+    position: absolute;
+    display: block;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    padding: 0px 4px;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    transform: translate(-50%, 0%);
+}
