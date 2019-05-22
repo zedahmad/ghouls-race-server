@@ -10,7 +10,7 @@ class GhoulsServer {
            socket.name = socket.remoteAddress + ":" + socket.remotePort;
            socket.player = ++this.connections;
 
-           // Let the client their ID and some config
+           // Send the client their ID and some config
            let clientConf = {
                id: socket.player,
                tick: 2
@@ -25,7 +25,7 @@ class GhoulsServer {
                    data = JSON.parse(data);
                    this.clients.set(socket.player, Object.assign(this.clients.get(socket.player), data));
                } catch (e) {
-                   console.log("Failed to parse client data.");
+                   console.log(`Failed to parse data from player ${socket.player} (${this.clients.get(socket.player).playername})`);
                    console.log(data);
                    console.log(e);
                }
