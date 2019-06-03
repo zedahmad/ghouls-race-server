@@ -5,9 +5,9 @@
 local json = require "json"
 
 -- config ----------------------------------------------
-local host = "127.0.0.1"
+local host = "ghoulshub.com"
 local port = "5000"
-local playername = "Zed"
+local playername = "PLAYERNAME"
 --------------------------------------------------------
 
 local data = {}
@@ -24,7 +24,8 @@ sock:open("socket." .. host .. ":" .. port)
 emu.register_frame_done(function()
 	frames = frames + 1
 	
-	if (shake == 0) then				
+	if (shake == 0) then
+		-- TODO: Add fixed length header containing size of communication.  Currently just reads 256 bytes
 		serverConf = json.decode(sock:read(256))
 		if (serverConf ~= nil) then
 			print("Your player ID is " .. serverConf.id)
