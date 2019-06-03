@@ -25,19 +25,31 @@ class GhoulsServer {
                    data = JSON.parse(data);
                    this.clients.set(socket.player, Object.assign(this.clients.get(socket.player), data));
                } catch (e) {
-                   console.log(`Failed to parse data from player ${socket.player} (${this.clients.get(socket.player).playername})`);
+                   if (this.clients.get(socket.player) !== undefined) {
+                       console.log(`Failed to parse data from player ${socket.player} (${this.clients.get(socket.player).playername}, ${socket.name})`);
+                   } else {
+                       console.log(`Failed to parse data from player ${socket.player} (${socket.name})`);
+                   }
                    console.log(data);
                    console.log(e);
                }
            });
 
            socket.on('end', () => {
-               console.log(`player ${socket.player} (${this.clients.get(socket.player).playername}) disconnected.`);
+               if (this.clients.get(socket.player) !== undefined) {
+                   console.log(`player ${socket.player} (${this.clients.get(socket.player).playername}, ${socket.name}) disconnected.`);
+               } else {
+                   console.log(`player ${socket.player} (${socket.name}) disconnected.`);
+               }
                this.clients.delete(socket.player);
            });
 
            socket.on('error', (err) => {
-               console.log(`player ${socket.player} (${this.clients.get(socket.player).state.playername}) error occurred.`);
+               if (this.clients.get(socket.player) !== undefined) {
+                   console.log(`player ${socket.player} (${this.clients.get(socket.player).playername}, ${socket.name}) error occurred.`);
+               } else {
+                   console.log(`player ${socket.player} (${socket.name}) error occurred.`);
+               }
                console.log(err);
                this.clients.delete(socket.player);
            });
