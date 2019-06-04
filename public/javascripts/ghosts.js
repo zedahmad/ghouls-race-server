@@ -71,9 +71,6 @@ let loop = setInterval(function () {
         for (let [key, player] of players) {
             if (key === id) continue; // Skip perspective player
 
-            let x = player.xpos - cam.x;
-            let y = 224 - (player.ypos - cam.y);
-
             // Ghost object selectors
             let ghostimg = $(`#ghost-${key}-img`);
             let ghostlabel = $(`#ghost-${key}-label`);
@@ -88,13 +85,16 @@ let loop = setInterval(function () {
                 disconnectedGhosts.delete(key);
             }
 
-            // Only show/update sprites if players are on the same loop and stage
+            // Only show/update ghosts if players are on the same loop and stage
             if (!(player.stage === players.get(id).stage && player.loop === players.get(id).loop)) {
                 ghostimg.css({visibility: "hidden"});
                 ghostlabel.css({visibility: "hidden"});
             } else {
                 ghostimg.css({visibility: "visible"});
                 ghostlabel.css({visibility: "visible"});
+
+                // Update label text
+                ghostlabel.text(player.playername);
 
                 let sprite;
 
@@ -109,10 +109,6 @@ let loop = setInterval(function () {
                     ghostimg.attr("src", sprite.src);
                 }
 
-                x += sprite.offset.x;
-                y += sprite.offset.y;
-                x -= ghostimg.width()/2; // Center sprite horizontally to character position
-
                 // Rotate sprites if they are moving left
                 // TODO: upgrade this with in-game sprite data or inputs instead of using x position?  Not sure if necessary
                 // Previous x position stored as a data-attribute - not reliable to pull from CSS because of the interpolated animation
@@ -123,7 +119,9 @@ let loop = setInterval(function () {
                 }
                 ghostimg.data('x', player.xpos);
 
-                // Interpolation
+                // Animate ghost with interpolation
+                let x = player.xpos - cam.x + sprite.offset.x - ghostimg.width()/2;
+                let y = 224 - (player.ypos - cam.y) + sprite.offset.y;
                 ghostimg.stop().animate({left: x, top: y}, refresh, "linear");
                 ghostlabel.stop().animate({left: x + (ghostimg.width() / 2), top: (y - (ghostimg.height()/2+4))}, refresh, "linear");
             }
