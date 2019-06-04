@@ -1,0 +1,10 @@
+{
+  "plugin": {
+    "name": "ghoulsrace",
+    "description": "GhoulsHub(tm) Race Server client script",
+    "version": "0.0.1",
+    "author": "Zed Ahmad",
+    "type": "plugin",
+    "start": "false"
+  }
+}
