@@ -5,6 +5,9 @@ class GhoulsServer {
    constructor(port) {
        this.clients = new Map();
        this.connections = 0;
+       this.serverConf = {
+           tick: 2
+       };
 
        net.createServer((socket) => {
            socket.name = socket.remoteAddress + ":" + socket.remotePort;
@@ -13,7 +16,7 @@ class GhoulsServer {
            // Send the client their ID and some config
            let clientConf = {
                id: socket.player,
-               tick: 2
+               tick: this.serverConf.tick
            };
            socket.write(JSON.stringify(clientConf));
 

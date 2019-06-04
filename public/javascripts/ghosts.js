@@ -1,8 +1,15 @@
 let data = [];
 let ghosts = new Set();
 
-// TODO: calc refresh from tickrate in GhoulsServer object rather than setting separately OR make configurable by client?
-const refresh = 33.333; // client refresh/animation interpolation time in ms
+// Get server config
+let serverConfig;
+$.ajax({
+    type: 'POST',
+    url: "/data/config",
+    async: false,
+    success: (data) => {serverConfig = JSON.parse(data);}
+});
+const refresh = (1000 / 60) * serverConfig.tick; // client refresh/animation interpolation time in ms
 const sprites = new Map();
 sprites.set(1, {
     src: "images/nakedrun.gif",

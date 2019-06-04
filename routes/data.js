@@ -5,6 +5,10 @@ router.post('/', function(req, res, next) {
     res.send(JSON.stringify(Array.from(req.app.get('server').clients)));
 });
 
+router.post('/config', function(req, res, next) {
+    res.send(JSON.stringify(req.app.get('server').serverConf));
+});
+
 router.get('/destroy', function(req, res, next) {
     req.app.get('server').clients = new Map();
     res.send("The deed is done");
