@@ -2,7 +2,8 @@
 const net = require('net');
 
 class GhoulsServer {
-   constructor(port) {
+   constructor(port, mongoConn) {
+       this.mongoConn = mongoConn;
        this.clients = new Map();
        this.connections = 0;
        this.serverConf = {
